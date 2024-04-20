@@ -1,8 +1,10 @@
 import IProduct from '../types/products.interfaces'
+import StatusType from '../types/status.type'
+import Status from '../constants/status'
 
 const generateProducts = (numproducts: number): IProduct[] => {
     const products: IProduct[] = []
-    const statusOptions: Array<IProduct['status']> = ['KREIRANO', 'NARUČENO', 'ISPORUČENO']
+    const statusOptions: Array<StatusType> = [Status.created, Status.delivered, Status.ordered]
     const articleNames: string[] = ['Iphone', 'Macbook pro', 'Mis', 'Stol']
     const supliersNames: string[] = ['Santa Domenica', 'Emmezeta', 'Portanova', 'Zelda']
 
