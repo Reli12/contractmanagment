@@ -1,4 +1,4 @@
-export default interface IArticle {
+export default interface IProduct {
     id: number
     naziv: string
     dobavljač: string
