@@ -1,3 +1,9 @@
+/*
+Moguči imprvment kod tipa podataka
+interface IContractArticle {
+    articleId: number
+    status: 'KREIRANO' | 'NARUČENO' | 'ISPORUČENO'
+}*/
 export default interface IContract {
     id: number
     kupac: string
