@@ -1,6 +1,9 @@
 import styled, { css } from 'styled-components'
 import TableRowItem from '../../atoms/TableRowItem/TableRowItem'
 import convertToCroatianDateFormat from '../../../utilities/ConvertToCroatianDate'
+import StatusType from '../../../types/status.type'
+import Status from '../../../constants/status'
+import StatusElement from '../../atoms/Status/StatusElement'
 
 interface ITableRow {
     rowValues: Record<string, any>
@@ -23,11 +26,14 @@ const Wrapper = styled.div<Iprops>`
             border-bottom: solid 1px lightgray;
         `}
 `
+
 const TableRow = ({ rowValues, haveBottomBorder = true, index = 1 }: ITableRow) => {
     const displayRightValue = (value: string, index: number) => {
         switch (value) {
             case 'deadline':
                 return <TableRowItem value={convertToCroatianDateFormat(rowValues[value])} key={index} />
+            case 'status':
+                return <TableRowItem value={<StatusElement status={rowValues[value]} />} key={index} />
             default:
                 return <TableRowItem value={rowValues[value]} key={index} />
         }
