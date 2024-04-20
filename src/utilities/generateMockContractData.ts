@@ -1,8 +1,10 @@
 import IContract from '../types/contract.types'
+import Status from '../constants/status'
+import StatusType from '../types/status.type'
 
 const generateContracts = (numContracts: number): IContract[] => {
     const contracts: IContract[] = []
-    const statusOptions: Array<IContract['status']> = ['KREIRANO', 'NARUČENO', 'ISPORUČENO']
+    const statusOptions: Array<StatusType> = [Status.created, Status.delivered, Status.ordered]
     const customerNames: string[] = ['John Doe', 'Jane Smith', 'Bob Johnson', 'Alice Brown']
     const productList: Array<Array<number>> = [
         [1, 2, 3],
