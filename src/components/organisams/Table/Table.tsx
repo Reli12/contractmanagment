@@ -23,7 +23,7 @@ const Table = ({ contracts }: ITable) => {
                     buyerName: 'Ime kupca:',
                     contractNumber: 'Broj ugovora:',
                     deadline: 'Rok isporuke:',
-                    status: 'Status:',
+                    statusFirst: 'Status:',
                 }}
             />
             {contracts?.map((contract, index) => {

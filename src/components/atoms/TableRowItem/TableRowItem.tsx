@@ -1,8 +1,9 @@
+import { ReactNode } from 'react'
 import styled from 'styled-components'
 import colors from '../../../typography/colors'
 
 interface ITableRowItem {
-    value?: string | null
+    value?: string | null | ReactNode
 }
 const StyleTableRowItem = styled.div`
     width: 200px;
