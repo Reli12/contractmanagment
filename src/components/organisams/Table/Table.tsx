@@ -1,8 +1,11 @@
 import styled from 'styled-components'
-import generateContracts from '../../../utilities/generateMockContractData'
 import TableRow from '../../molecules/TableRow/TableRow'
 import colors from '../../../typography/colors'
-import convertToCroatianDateFormat from '../../../utilities/ConvertToCroatianDate'
+import IContract from '../../../types/contract.types'
+
+interface ITable {
+    contracts?: IContract[]
+}
 
 const Wrapper = styled.div`
     min-height: 500px;
@@ -12,10 +15,7 @@ const Wrapper = styled.div`
     background-color: ${colors.primaryBlue};
     border-radius: 10px;
 `
-const Table = () => {
-    const contracts = generateContracts(5)
-    console.log(contracts)
-
+const Table = ({ contracts }: ITable) => {
     return (
         <Wrapper>
             <TableRow
@@ -26,8 +26,7 @@ const Table = () => {
                     status: 'Status:',
                 }}
             />
-            {contracts.map((contract, index) => {
-                console.log(convertToCroatianDateFormat(contract.rok_isporuke))
+            {contracts?.map((contract, index) => {
                 return (
                     <TableRow
                         rowValues={{

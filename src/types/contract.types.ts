@@ -11,5 +11,5 @@ export default interface IContract {
     datum_akontacije: string
     rok_isporuke: string
     status: 'KREIRANO' | 'NARUČENO' | 'ISPORUČENO'
-    articles?: Array<number> | number //reference on the articles that is on the contract
+    products?: Array<number> | number //reference on the articles that is on the contract
 }

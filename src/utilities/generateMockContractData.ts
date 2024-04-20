@@ -4,7 +4,7 @@ const generateContracts = (numContracts: number): IContract[] => {
     const contracts: IContract[] = []
     const statusOptions: Array<IContract['status']> = ['KREIRANO', 'NARUČENO', 'ISPORUČENO']
     const customerNames: string[] = ['John Doe', 'Jane Smith', 'Bob Johnson', 'Alice Brown']
-    const articleList: Array<Array<number>> = [
+    const productList: Array<Array<number>> = [
         [1, 2, 3],
         [3, 4, 5],
         [4, 2],
@@ -19,7 +19,7 @@ const generateContracts = (numContracts: number): IContract[] => {
             datum_akontacije: generateRandomDate(),
             rok_isporuke: generateRandomDate(),
             status: statusOptions[Math.floor(Math.random() * statusOptions.length)],
-            articles: articleList[Math.floor(Math.random() * articleList.length)],
+            products: productList[Math.floor(Math.random() * productList.length)],
         }
         contracts.push(contract)
     }

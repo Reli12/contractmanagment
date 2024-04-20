@@ -1,16 +1,12 @@
 import Table from '../components/organisams/Table/Table'
-import useFilterContracts from '../hooks/useFilterContracts'
-import { useEffect } from 'react'
+import { useContractContext } from '../context/contractsContext/ContractContext'
 
 const Home = () => {
-    const { filterContracts } = useFilterContracts()
+    const { contracts } = useContractContext()
 
-    useEffect(() => {
-        console.log(filterContracts('KREIRANO'))
-    }, [])
     return (
         <div>
-            <Table />
+            <Table contracts={contracts} />
         </div>
     )
 }

@@ -1,16 +1,20 @@
 import generateContracts from '../utilities/generateMockContractData'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import IContract from '../types/contract.types'
+import { useContractContext } from '../context/contractsContext/ContractContext'
 
 const useFilterContracts = () => {
-    // TODO refactor this to use and get data from the context
-    const contracts = generateContracts(10)
+    const { contracts } = useContractContext()
     const filteredContracts = useRef<IContract[]>([...contracts])
 
+    useEffect(() => {
+        filteredContracts.current = [...contracts]
+    }, [contracts])
+
     const filterContracts = (filterValue?: string) => {
-        if (!filterValue || filterValue === '') {
+        if (filterValue === undefined || filterValue === '') {
             filteredContracts.current = [...contracts]
-            return null
+            return undefined
         }
 
         if (/^[0-9]{2}\./.test(filterValue)) {
@@ -34,19 +38,23 @@ const useFilterContracts = () => {
     }
 
     const filterContractByStatus = (filterValue?: string) => {
-        if (!filterValue || filterValue === '') {
+        if (filterValue === undefined || filterValue === '') {
             filteredContracts.current = [...contracts]
-            return null
+            return undefined
         }
         if (!!filterValue && /^(KREIRANO|NARUČENO|ISPORUČENO)$/.test(filterValue)) {
             filteredContracts.current = filteredContracts.current.filter((item) =>
-                item.kupac.toLowerCase().includes(filterValue.toLowerCase())
+                item.status.toLowerCase().includes(filterValue.toLowerCase())
             )
             return filteredContracts.current
         }
     }
 
-    return { filterContracts, filterContractByStatus }
+    const resetFilters = () => {
+        filteredContracts.current = [...contracts]
+    }
+
+    return { filterContracts, filterContractByStatus, resetFilters }
 }
 
 export default useFilterContracts
