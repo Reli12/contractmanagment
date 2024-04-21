@@ -3,7 +3,7 @@ import styled from 'styled-components'
 
 interface Option {
     label: string
-    value: string
+    value: string | number
     disabled?: boolean
 }
 
