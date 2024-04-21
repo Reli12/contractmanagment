@@ -1,9 +1,19 @@
 import { NavWrapper, StyledNavLink } from './NavigationBar.style'
+import { useNavigate } from 'react-router-dom'
 
 const NavigationBar = () => {
+    const navigate = useNavigate()
     return (
         <NavWrapper>
-            <StyledNavLink href={'/'}>List</StyledNavLink>
+            <StyledNavLink onClick={() => navigate('/')} $isActive={window.location.pathname === '/'}>
+                Pregled ugovora
+            </StyledNavLink>
+            <StyledNavLink
+                onClick={() => navigate('/addNewContract')}
+                $isActive={window.location.pathname === '/addNewContract'}
+            >
+                Dodaj novi ugovor
+            </StyledNavLink>
         </NavWrapper>
     )
 }
