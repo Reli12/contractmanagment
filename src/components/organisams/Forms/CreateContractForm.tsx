@@ -13,8 +13,6 @@ import { useContractContext } from '../../../context/contractsContext/ContractCo
 import Status from '../../../constants/status'
 import { useNavigate } from 'react-router-dom'
 
-interface IFiltersForm {}
-
 const WrapperForm = styled.div`
     display: flex;
     flex-direction: column;
@@ -43,7 +41,7 @@ const validationSchema: Yup.Schema<Partial<ICreateContract>> = Yup.object().shap
     products: Yup.array().of(Yup.number().required()),
 })
 
-const CreateContractForm = ({}: IFiltersForm) => {
+const CreateContractForm = () => {
     const { products } = useProductsContext()
     const { addNewContract } = useContractContext()
     const navigate = useNavigate()
@@ -115,7 +113,7 @@ const CreateContractForm = ({}: IFiltersForm) => {
                             <CustomDatePicker
                                 handleSelectedDate={(date) => {
                                     setErrorToShow((prev) => ({ ...prev, datumAkontacije: false }))
-                                    setFieldValue('datumAkontacije', formatDate(date, true))
+                                    setFieldValue('datumAkontacije', formatDate(date, false))
                                 }}
                             />
                             {errorToShow.datumAkontacije && <ErrorMessage>Odaberite datum akontacije</ErrorMessage>}
@@ -125,7 +123,7 @@ const CreateContractForm = ({}: IFiltersForm) => {
                             <CustomDatePicker
                                 handleSelectedDate={(date) => {
                                     setErrorToShow((prev) => ({ ...prev, rokIsporuke: false }))
-                                    setFieldValue('rokIsporuke', formatDate(date, true))
+                                    setFieldValue('rokIsporuke', formatDate(date, false))
                                 }}
                                 minDate={new Date()}
                             />
