@@ -26,7 +26,8 @@ const ContractProvider = ({ children }: IChildren) => {
 
     const addNewContract = (contract: IContract) => {
         contract.id = contracts.length + 1
-        setContracts((prev) => [...prev, contract])
+        contract.status = Status.created
+        setContracts((prev) => [contract, ...prev])
     }
 
     const throwError = (message: string) => {

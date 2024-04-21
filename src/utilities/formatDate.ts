@@ -1,4 +1,4 @@
-const formatDate = (date: Date | number): string => {
+const formatDate = (date: Date | number, isDifferentFormat?: boolean): string => {
     let dateObj: Date
 
     if (date instanceof Date) {
@@ -12,7 +12,7 @@ const formatDate = (date: Date | number): string => {
     const day = String(dateObj.getDate()).padStart(2, '0')
 
     // Concatenate and return formatted date
-    return `${year}-${month}-${day}`
+    return isDifferentFormat ? `${day}-${month}-${year}` : `${year}-${month}-${day}`
 }
 
 export default formatDate

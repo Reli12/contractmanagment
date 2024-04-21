@@ -1,7 +1,7 @@
 /*
-Moguči imprvment kod tipa podataka
-interface IContractArticle {
-    articleId: number
+It is possible improvments of the type for the products
+interface IProducts {
+    productId: number
     status: 'KREIRANO' | 'NARUČENO' | 'ISPORUČENO'
 }*/
 import StatusType from './status.type'
@@ -13,5 +13,5 @@ export default interface IContract {
     datum_akontacije: string
     rok_isporuke: string
     status: StatusType
-    products?: Array<number> | number //reference on the articles that is on the contract
+    products: Array<number> | number //reference on the product that is on the contract
 }
