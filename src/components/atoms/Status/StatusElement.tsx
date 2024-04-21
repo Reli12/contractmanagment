@@ -25,10 +25,10 @@ const StatusWrapper = styled.div<{ $staus: StatusType }>`
         props.$staus === Status.ordered &&
         css`
             div {
-                background: yellow;
+                background: #ffff00;
             }
             p {
-                color: yellow;
+                color: #ffff00;
             }
         `} 
     ${(props) =>

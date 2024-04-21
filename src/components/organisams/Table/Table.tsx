@@ -2,6 +2,7 @@ import styled from 'styled-components'
 import TableRow from '../../molecules/TableRow/TableRow'
 import colors from '../../../typography/colors'
 import IContract from '../../../types/contract.types'
+import { useNavigate } from 'react-router-dom'
 
 interface ITable {
     contracts?: IContract[]
@@ -16,6 +17,7 @@ const Wrapper = styled.div`
     border-radius: 10px;
 `
 const Table = ({ contracts }: ITable) => {
+    const navigate = useNavigate()
     return (
         <Wrapper>
             <TableRow
@@ -38,6 +40,7 @@ const Table = ({ contracts }: ITable) => {
                         haveBottomBorder={index !== contracts.length - 1}
                         index={index + 1}
                         key={index}
+                        onClick={() => navigate(`/overview/${contract.id}`)}
                     />
                 )
             })}
