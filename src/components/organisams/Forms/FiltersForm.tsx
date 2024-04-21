@@ -67,7 +67,7 @@ const FiltersForm = ({ resetFilters, handleFiltering }: IFiltersForm) => {
                                 setSelectedValue(value)
                                 setFieldValue('statusFilter', value)
                             }}
-                            placeholder="Odaberi opciju"
+                            placeholder="Odaberi opciju stanja ugovora"
                             options={options}
                         />
                         <Button label={'Filtriraj'} />

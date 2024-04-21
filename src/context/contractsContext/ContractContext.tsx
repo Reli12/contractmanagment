@@ -4,10 +4,16 @@ import generateContracts from '../../utilities/generateMockContractData'
 import StatusType from '../../types/status.type'
 import Status from '../../constants/status'
 
+interface IUpdateContract {
+    contract: IContract
+    contractStatus: StatusType
+    rok_isporuke: string
+}
 interface IContractContext {
     contracts: IContract[]
     addNewContract: (contract: IContract) => void
-    updateContractStatus: (contract: IContract, status: StatusType) => void
+    updateContractStatus: (contract: IContract, status: StatusType) => IContract | undefined
+    updateContract: ({ contract, contractStatus, rok_isporuke }: IUpdateContract) => IContract | undefined
 }
 interface IChildren {
     children?: ReactNode
@@ -29,6 +35,7 @@ const ContractProvider = ({ children }: IChildren) => {
     const throwError = (message: string) => {
         throw new Error(message)
     }
+
     const updateContractStatus = (contract: IContract, status: StatusType) => {
         const index = contracts.findIndex((item) => item.id === contract.id)
         if (index === -1) throwError('The item is not in the list')
@@ -55,8 +62,22 @@ const ContractProvider = ({ children }: IChildren) => {
         }
     }
 
+    const updateContract = ({ contract, contractStatus, rok_isporuke }: IUpdateContract) => {
+        const index = contracts.findIndex((item) => item.id === contract.id)
+        if (index === -1) throwError('The item is not in the list')
+        if (contract.status !== contractStatus) {
+            updateContractStatus(contract, contractStatus)
+        }
+        if (contract.rok_isporuke !== rok_isporuke) {
+            contracts[index] = { ...contracts[index], rok_isporuke: rok_isporuke }
+            contract.rok_isporuke = rok_isporuke
+        }
+
+        return contract
+    }
+
     return (
-        <ContractContext.Provider value={{ contracts, addNewContract, updateContractStatus }}>
+        <ContractContext.Provider value={{ contracts, addNewContract, updateContractStatus, updateContract }}>
             {children}
         </ContractContext.Provider>
     )

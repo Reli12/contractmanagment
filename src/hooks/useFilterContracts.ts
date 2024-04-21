@@ -20,7 +20,7 @@ const useFilterContracts = () => {
 
         if (/^[0-9]{2}\./.test(filterValue)) {
             filteredContracts.current = filteredContracts.current.filter((item) =>
-                item.rok_isporuke.startsWith(filterValue)
+                item.rok_isporuke.split('-').reverse().join('.').startsWith(filterValue)
             )
             return filteredContracts.current
         } else if (/^[0-9]{1}\/[0-9]{2}/.test(filterValue)) {

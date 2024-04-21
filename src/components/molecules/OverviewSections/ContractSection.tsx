@@ -1,8 +1,12 @@
 import IContract from '../../../types/contract.types'
 import StatusElement from '../../atoms/Status/StatusElement'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import colors from '../../../typography/colors'
 import convertToCroatianDateFormat from '../../../utilities/ConvertToCroatianDate'
+import React, { useState } from 'react'
+import Button from '../../atoms/Button/Button'
+import Status from '../../../constants/status'
+import EditContractValues from '../../organisams/Forms/UpdateContractValues'
 
 interface IContractSection {
     contract?: IContract
@@ -37,15 +41,26 @@ const WrapperStatus = styled.div`
         margin: 0;
     }
 `
-const Line = styled.div`
+const Line = styled.div<{ $isNeedMoreWidth?: boolean }>`
     background: ${colors.primaryBlue};
     height: 1px;
     width: 100%;
     max-width: 750px;
     margin-left: 20px;
+    ${(props) =>
+        props.$isNeedMoreWidth &&
+        css`
+            max-width: 1100px;
+        `}
 `
+
 const ContractSection = ({ contract }: IContractSection) => {
+    const [isEditEnabled, setIsEditEnabled] = useState(false)
+
+    // This is for preventing showing and executing any other code
+    // if contract data is not available
     if (contract === undefined) return null
+
     return (
         <>
             <StyleH2>DETALJI O UGOVORU</StyleH2>
@@ -62,18 +77,34 @@ const ContractSection = ({ contract }: IContractSection) => {
                     <DetailLabel>Datum akontacije:</DetailLabel>
                     <DetailValue>{convertToCroatianDateFormat(contract?.datum_akontacije)}</DetailValue>
                 </DetailItem>
-                <DetailItem>
-                    <DetailLabel>Rok isporuke:</DetailLabel>
-                    <DetailValue>{convertToCroatianDateFormat(contract?.rok_isporuke)}</DetailValue>
-                </DetailItem>
-                <DetailItem>
-                    <DetailLabel>Status:</DetailLabel>
-                    <WrapperStatus>
-                        <StatusElement status={contract?.status} />
-                    </WrapperStatus>
-                </DetailItem>
+                {isEditEnabled ? (
+                    <EditContractValues
+                        contract={contract}
+                        cancelEditing={(cancel) => {
+                            setIsEditEnabled(!cancel)
+                        }}
+                    />
+                ) : (
+                    <>
+                        <DetailItem>
+                            <DetailLabel>Rok isporuke:</DetailLabel>
+                            <DetailValue>{convertToCroatianDateFormat(contract?.rok_isporuke)}</DetailValue>
+                        </DetailItem>
+                        <DetailItem>
+                            <DetailLabel>Status:</DetailLabel>
+                            <WrapperStatus>
+                                <StatusElement status={contract?.status} />
+                            </WrapperStatus>
+                        </DetailItem>
+                        {contract.status !== Status.delivered && (
+                            <DetailItem>
+                                <Button label={'Uredi ugovor'} onClick={() => setIsEditEnabled(true)} />
+                            </DetailItem>
+                        )}
+                    </>
+                )}
             </ContractDetailContainer>
-            <Line />
+            <Line $isNeedMoreWidth={contract.status !== Status.delivered} />
         </>
     )
 }
