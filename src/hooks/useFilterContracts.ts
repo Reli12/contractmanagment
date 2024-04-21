@@ -1,7 +1,8 @@
-import generateContracts from '../utilities/generateMockContractData'
 import { useEffect, useRef } from 'react'
 import IContract from '../types/contract.types'
 import { useContractContext } from '../context/contractsContext/ContractContext'
+import FilterStatus from '../constants/filterStatus'
+import Status from '../constants/status'
 
 const useFilterContracts = () => {
     const { contracts } = useContractContext()
@@ -37,21 +38,30 @@ const useFilterContracts = () => {
         return filteredContracts.current
     }
 
-    const filterContractByStatus = (filterValue?: string) => {
-        if (filterValue === undefined || filterValue === '') {
+    const filterContractByStatus = (filterValue?: FilterStatus) => {
+        if (filterValue === undefined || filterValue === FilterStatus.noValue) {
             filteredContracts.current = [...contracts]
             return undefined
         }
-        if (!!filterValue && /^(KREIRANO|NARUČENO|ISPORUČENO)$/.test(filterValue)) {
-            filteredContracts.current = filteredContracts.current.filter((item) =>
-                item.status.toLowerCase().includes(filterValue.toLowerCase())
+        if (filterValue === FilterStatus.active) {
+            filteredContracts.current = filteredContracts.current.filter(
+                (item) =>
+                    item.status.toLowerCase().includes(Status.created.toLowerCase()) ||
+                    item.status.toLowerCase().includes(Status.ordered.toLowerCase())
             )
+            console.log(filteredContracts.current)
             return filteredContracts.current
         }
+
+        filteredContracts.current = filteredContracts.current.filter((item) =>
+            item.status.toLowerCase().includes(Status.delivered.toLowerCase())
+        )
+        return filteredContracts.current
     }
 
     const resetFilters = () => {
         filteredContracts.current = [...contracts]
+        return filteredContracts.current
     }
 
     return { filterContracts, filterContractByStatus, resetFilters }
