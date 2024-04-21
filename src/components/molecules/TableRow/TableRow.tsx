@@ -9,10 +9,12 @@ interface ITableRow {
     rowValues: Record<string, any>
     haveBottomBorder?: boolean
     index?: number
+    onClick?: () => void
 }
 
 interface Iprops {
     $haveBottomBorder?: boolean
+    $isOnclick?: boolean
 }
 const Wrapper = styled.div<Iprops>`
     height: 75px;
@@ -25,9 +27,14 @@ const Wrapper = styled.div<Iprops>`
         css`
             border-bottom: solid 1px lightgray;
         `}
+    ${(props) =>
+        props.$isOnclick &&
+        css`
+            cursor: pointer;
+        `}
 `
 
-const TableRow = ({ rowValues, haveBottomBorder = true, index = 1 }: ITableRow) => {
+const TableRow = ({ rowValues, haveBottomBorder = true, index = 1, onClick }: ITableRow) => {
     const displayRightValue = (value: string, index: number) => {
         switch (value) {
             case 'deadline':
@@ -39,7 +46,7 @@ const TableRow = ({ rowValues, haveBottomBorder = true, index = 1 }: ITableRow) 
         }
     }
     return (
-        <Wrapper key={index} $haveBottomBorder={haveBottomBorder}>
+        <Wrapper key={index} $haveBottomBorder={haveBottomBorder} $isOnclick={onClick !== undefined} onClick={onClick}>
             {Object.keys(rowValues).map((value, index) => {
                 return displayRightValue(value, index)
             })}

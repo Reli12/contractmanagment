@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useContext, useState } from 'react'
 import IContract from '../../types/contract.types'
 import generateContracts from '../../utilities/generateMockContractData'
 import StatusType from '../../types/status.type'
@@ -19,10 +19,6 @@ const ContractContext = createContext<IContractContext | undefined>(undefined)
 
 const ContractProvider = ({ children }: IChildren) => {
     const [contracts, setContracts] = useState<IContract[]>(generateContracts(10))
-
-    useEffect(() => {
-        console.log('Implement fetching data for contracts')
-    }, [])
 
     const addNewContract = (contract: IContract) => {
         contract.id = contracts.length + 1
