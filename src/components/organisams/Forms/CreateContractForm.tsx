@@ -50,7 +50,8 @@ const CreateContractForm = () => {
         datumAkontacije: boolean
         rokIsporuke: boolean
         products: boolean
-    }>({ datumAkontacije: false, rokIsporuke: false, products: false })
+        networkError: boolean
+    }>({ datumAkontacije: false, rokIsporuke: false, products: false, networkError: false })
 
     const initialValues: ICreateContract = {
         name: '',
@@ -75,16 +76,21 @@ const CreateContractForm = () => {
             setErrorToShow((prev) => ({ ...prev, products: true }))
             return
         }
-        addNewContract({
-            kupac: `${values.name} ${values.lastName}`,
-            id: 1,
-            broj_ugovora: values.brojUgovora,
-            datum_akontacije: values.datumAkontacije,
-            rok_isporuke: values.rokIsporuke,
-            status: Status.created,
-            products: values.products,
-        })
-        navigate('/')
+        try {
+            addNewContract({
+                kupac: `${values.name} ${values.lastName}`,
+                id: 1,
+                broj_ugovora: values.brojUgovora,
+                datum_akontacije: values.datumAkontacije,
+                rok_isporuke: values.rokIsporuke,
+                status: Status.created,
+                products: values.products,
+            })
+            navigate('/')
+        } catch (error) {
+            console.log(error)
+            setErrorToShow((prev) => ({ ...prev, networkError: true }))
+        }
     }
 
     const productOptions = useMemo(() => {
@@ -149,6 +155,11 @@ const CreateContractForm = () => {
                         />
                         {errorToShow.products && <ErrorMessage>Odaberite minimum jedan proizvod</ErrorMessage>}
                         <Button label={'Kreiraj novi ugovor'} />
+                        {errorToShow.networkError && (
+                            <ErrorMessage>
+                                Došlo je do pogriješke prilikom kreiranja novoga ugovora, pokušajte ponovno kasnije.
+                            </ErrorMessage>
+                        )}
                     </WrapperForm>
                 </Form>
             )}

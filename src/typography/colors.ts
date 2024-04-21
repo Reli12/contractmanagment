@@ -6,7 +6,8 @@ const colors = {
     sendBrown: '#FC9E4F',
     citrus: '#A37A74',
     lightGray: '#F2F2F2',
-    white: "#FFFFFF"
+    white: '#FFFFFF',
+    black: '#000000',
 }
 
 export default colors
